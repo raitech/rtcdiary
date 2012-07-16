@@ -28,14 +28,14 @@ para separar as|
 tags do índice |
 de entradas    |
                |YYYY-MM-DD:no_entradas:ultimo_no
-			   |0001:tag_1,tag_2:tiulo
-			   |0002:tag_1,tag_4,tag_3:titulo
+               |0001:tag_1,tag_2:tiulo
+               |0002:tag_1,tag_4,tag_3:titulo
 ent. removida  |R004:tag_1,tag_4,tag_3:titulo
-			   |
-			   |
-			   |
-			   |
-			   |
+               |
+               |
+               |
+               |
+               |
 ------------------------------------------------
 
 O índice de entradas é separado por datas com granularidade diária. Cada data
