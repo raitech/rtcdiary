@@ -1,0 +1,82 @@
+rtcdiary: ferramenta para gerenciar entradas em um diário.
+
+Ideia
+-----
+
+Usar txt2tags como linguagem de marcação para poder converter, facilmente,
+para diversos outros formatos (principalmente HTML e até LaTeX).
+
+Usar Git para gerenciar as modificações, já que as entradas podem ser editadas
+a qualquer momento.
+
+Tudo em modo texto, inclusive o índice e a lista de tags. Eis o modelo que
+pensei para o arquivo 'index_and_tags' (um arquivo só, um só file descriptor):
+
+descição         modelo de conteúdo do arquivo
+------------------------------------------------
+1as. linhas:   |tag_1:x,tag_2:y,tag_3:x,tag_4:z
+ lista de tags |
+ separadas por |
+ vírgulas,     |
+ com o no. de  |
+ entradas que  |
+ referenciam-na|
+
+pelo menos uma |
+linha em branco|
+para separar as|
+tags do índice |
+de entradas    |
+               |YYYY-MM-DD:no_entradas:ultimo_no
+			   |0001:tag_1,tag_2:tiulo
+			   |0002:tag_1,tag_4,tag_3:titulo
+ent. removida  |R004:tag_1,tag_4,tag_3:titulo
+			   |
+			   |
+			   |
+			   |
+			   |
+------------------------------------------------
+
+O índice de entradas é separado por datas com granularidade diária. Cada data
+corresponde a um diretório que contém os arquivos .t2t, na seguinte estrutura:
+
+diario/
+ 2012-10-20/
+  0001:tag_1-tag_2.t2t
+
+Guarda-se cada entrada em uma linha a baixo da sua respectiva data. Na linha
+da data, temos o número total de entradas e o último número usado. Como é
+possivel representar até 9999, pode-se remover algumas entradas sem precisar
+refazer o índice, o que é seria custoso. Esse refazer se refere a mover todas
+as linhas do arquivo subsequentes a linha removida. Também para evitar essa
+necessidade, marca-se as entradas removidas com um R no lugar do primeiro
+algarismo. Após um bom números de entradas removidas, pode-se refazer o
+índice.
+
+Usar uma estrutura de nomes de arquivos e diretórios parecida com a do índice
+auxilia na hora de remontar o índice e checar dados.
+
+Como não é um sistema pensado para funcionar com acesso concorrente, faz
+sentido usar modo texto, também por que é um sistema pensado para uso tão
+somente pessoal.
+
+Depois de algumas entradas inseridas, pode-se compilar o material para HTML
+puro, ou qualquer outro formato suportado pelo txt2tags. Ter esse material em
+HTML estático é interessante para poder colocar online e visualizar, inclusive
+com figuras, num navegador. E não é necessário se preocupar com versão de
+interpretador de alguma linguagem.
+
+Ideias ainda não claras
+-----------------------
+
+Como saber que uma entrada foi editada e como mostrar isso no material
+compilado?
+
+Como compilar só o que é novo ou alterado?
+
+Faz sentido que uma entrada alterada continue vivendo no diretório relativo a
+sua data de criação, em sendo essa diferente da data de edição?
+ Tecnicamente, parece fazer sentido sim, mas semanticamente é estranho. Se
+ tenho uma entrada criada em 2012-02-10 e a edito em 2012-02-15
+
